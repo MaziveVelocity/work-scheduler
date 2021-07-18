@@ -7,15 +7,7 @@ loadSavedData();
 
 $("#currentDay").text(time);
 
-// $("#8").html("test");
-
-// for(i = 0; i < localData.length; i++){
-//     var index = i + 8;
-//     console.log("loading");
-//     console.log(localData);
-//     $(`#${index}-block`).val(localData[index].description);
-// }
-
+// checks for what hour it is and then updates the page to reflect time
 if(hour <= 7){
     console.log("to early");
     $(".description").addClass("future");
@@ -66,30 +58,35 @@ if(hour <= 7){
     $(".description").addClass("past");
 }
 
+// when save button is pressed save data
 $("i").on("click",function(){
     var btnValue = parseInt($(this).attr('id'));
     var textValue = $(`#${btnValue}-block`).val().trim();
     var index = btnValue - workdayLength;
     save(index, btnValue, textValue);
-})
+});
 
+// checks if hour is in the past
 function checkPast(hour){
     for(i = hour - 1;i >= 8; i--){
         $(`#${i.toString()}`).addClass("past");
     }
 }
 
+// checks if the hour is in the future
 function checkFuture(hour){
     for(i = hour + 1;i <= 17; i++){
         $(`#${i.toString()}`).addClass("future");
     }
 }
 
+// savse data
 function save(index, time, description){
     localData.splice(index, 1, {time: time, description: description});
     localStorage.setItem("scheduleData",JSON.stringify(localData))
 }
 
+// loads data
 function loadSavedData(){
     for(i = 0; i < workdayLength; i++){
         console.log(i);
