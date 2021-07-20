@@ -3,6 +3,11 @@ var hour = moment().hour();
 var workdayLength = 10;
 var localData = JSON.parse(localStorage.getItem("scheduleData")) || [];
 
+var refreshTimer = setInterval(function(){
+    location.reload();
+    console.log("page refresh");
+}, 3600000);
+
 loadSavedData();
 
 $("#currentDay").text(time);
